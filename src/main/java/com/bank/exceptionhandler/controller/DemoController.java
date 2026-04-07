@@ -84,19 +84,22 @@ public class DemoController {
         throw new RuntimeException("Something went terribly wrong internally");
     }
 
-    // Tests KycPendingException - GET /api/demo/kyc/check
+    // Simulates: KYC verification pending
+    // GET /api/demo/kyc/check
     @GetMapping("/kyc/check")
     public ResponseEntity<String> checkKyc() {
         throw new KycPendingException("KYC verification pending. Please upload your documents.");
     }
 
-    // Tests FxRateUnavailableException - GET /api/demo/fx/rate
+    // Simulates: FX rate service unavailable
+    // GET /api/demo/fx/rate
     @GetMapping("/fx/rate")
     public ResponseEntity<String> getFxRate() {
         throw new FxRateUnavailableException("Exchange rate service temporarily unavailable. Please try again later.");
     }
 
-    // Tests CreditLimitExceededException - POST /api/demo/credit/spend?amount=6000
+    // Simulates: credit limit exceeded
+    // POST /api/demo/credit/spend?amount=6000
     @PostMapping("/credit/spend")
     public ResponseEntity<String> creditSpend(@RequestParam double amount) {
         double creditLimit = 5000;
@@ -108,6 +111,8 @@ public class DemoController {
         return ResponseEntity.ok("Spent " + amount + " BHD using credit card");
     }
 
+    // Simulates: account blocked
+    // GET /api/demo/account/login
     @GetMapping("/account/login")
     public ResponseEntity<String> accountLogin() {
         throw new AccountBlockedException("Your account has been blocked. Please contact support.");
