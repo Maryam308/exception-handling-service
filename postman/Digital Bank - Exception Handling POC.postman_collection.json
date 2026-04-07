@@ -1,0 +1,285 @@
+{
+  "info": {
+    "_postman_id": "a8ab86e6-bc7e-4c4c-86ce-254e8d7cd8f8",
+    "name": "Digital Bank - Exception Handling POC",
+    "description": "Centralized Exception Handling POC for Digital Bank microservices. Tests all 10 error scenarios with their respective error codes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52623692",
+    "_collection_link": "https://go.postman.co/collection/52623692-a8ab86e6-bc7e-4c4c-86ce-254e8d7cd8f8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Resource Not Found (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/users/999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "users",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Unauthorized (403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/admin?role=USER",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "admin"
+          ],
+          "query": [
+            {
+              "key": "role",
+              "value": "USER"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. KYC Pending (403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/kyc/check",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "kyc",
+            "check"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Account Blocked (403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/account/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "account",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Insufficient Funds (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"amount\": 9999, \"balance\": 100}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/demo/transfer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "transfer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. FX Rate Unavailable (503)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/fx/rate",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "fx",
+            "rate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Credit Limit Exceeded (400)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/credit/spend?amount=6000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "credit",
+            "spend"
+          ],
+          "query": [
+            {
+              "key": "amount",
+              "value": "6000"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Bad Request (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/account?status=CLOSED",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "account"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "CLOSED"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Validation Error (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"email\": \"not-an-email\",\n  \"password\": \"123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/demo/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Server Error (500)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/crash",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "crash"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11. Success (No Error)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/demo/users/123",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "demo",
+            "users",
+            "123"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
