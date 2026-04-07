@@ -4,7 +4,7 @@
 
 ## What is this?
 
-This is a standalone Spring Boot service that demonstrates **centralized exception handling** — a reusable pattern where all error responses across the entire system are handled in one place, consistently.
+This is a standalone Spring Boot service that demonstrates **centralized exception handling**, a reusable pattern where all error responses across the entire system are handled in one place, consistently.
 
 **Without this pattern:**
 - Every microservice writes its own error handling logic
@@ -13,7 +13,7 @@ This is a standalone Spring Boot service that demonstrates **centralized excepti
 
 **With this pattern:**
 - Every error, from any microservice, returns the same clean JSON structure
-- Errors are organized by domain (auth, transfer, credit, admin)
+- Errors are organized by domain (auth, transfer, credit, admin, account)
 - One file to update if the format ever needs to change
 - Professional, predictable, production-ready API behavior
 
@@ -22,9 +22,8 @@ This is a standalone Spring Boot service that demonstrates **centralized excepti
 ## Tech Stack
 
 - Java 21
-- Spring Boot 3.2.4
+- Spring Boot 
 - Maven
-- No database required
 
 ---
 
@@ -39,23 +38,23 @@ src/main/java/com/bank/exceptionhandler/
 │   └── DemoController.java              # Demo endpoints to trigger each exception
 │
 ├── exception/
-│   ├── GlobalExceptionHandler.java      ⭐ THE CORE — handles all exceptions in one place
-│   ├── ResourceNotFoundException.java   # 404 - resource not found
-│   ├── BadRequestException.java         # 400 - invalid request
+│   ├── GlobalExceptionHandler.java      ⭐ THE CORE: handles all exceptions in one place
+│   ├── ResourceNotFoundException.java   # 404: resource not found
+│   ├── BadRequestException.java         # 400: invalid request
 │   │
 │   ├── auth/
-│   │   ├── UnauthorizedException.java   # 403 - no permission
-│   │   └── KycPendingException.java     # 403 - KYC not completed
+│   │   ├── UnauthorizedException.java   # 403: no permission
+│   │   └── KycPendingException.java     # 403: KYC not completed
 │   │
 │   ├── transfer/
-│   │   ├── InsufficientFundsException.java    # 400 - not enough balance
-│   │   └── FxRateUnavailableException.java    # 503 - exchange rate service down
+│   │   ├── InsufficientFundsException.java    # 400: not enough balance
+│   │   └── FxRateUnavailableException.java    # 503: exchange rate service down
 │   │
 │   ├── credit/
-│   │   └── CreditLimitExceededException.java  # 400 - over credit limit
+│   │   └── CreditLimitExceededException.java  # 400: over credit limit
 │   │
 │   ├── admin/
-│   │   └── AccountBlockedException.java       # 403 - account is blocked
+│   │   └── AccountBlockedException.java       # 403: account is blocked
 │   │
 │   └── account/                               # Reserved for future account-related exceptions
 │
@@ -80,7 +79,7 @@ Every error in the system returns this exact structure:
   "errorCode": "AUTH-050",
   "error": "KYC_PENDING",
   "message": "Identity verification pending. Please complete KYC to access banking features.",
-  "timestamp": "2025-04-07T10:30:00"
+  "timestamp": "2026-04-07T10:30:00"
 }
 ```
 
@@ -92,7 +91,7 @@ For validation errors, a `fieldErrors` array is also included:
   "errorCode": "VAL-400",
   "error": "VALIDATION_FAILED",
   "message": "One or more fields are invalid",
-  "timestamp": "2025-04-07T10:30:00",
+  "timestamp": "2026-04-07T10:30:00",
   "fieldErrors": [
     { "field": "email", "message": "Email must be a valid email address" },
     { "field": "password", "message": "Password must be at least 6 characters" }
@@ -188,15 +187,3 @@ New exceptions can be added at any time as the system grows. Simply create a new
 
 Then register a handler for it in `GlobalExceptionHandler.java`. No other files need to change.
 
----
-
-## Why This Matters for the Digital Bank
-
-In a banking system, consistent error handling is critical:
-
-- **Frontend** relies on predictable error codes to show the right message to users
-- **Mobile apps** need structured responses to handle errors gracefully
-- **Support teams** use error codes (AUTH-050, FX-101) to diagnose issues quickly
-- **Compliance** requires structured, traceable error responses for auditing
-
-This POC provides the foundation that every other microservice in the system can build on.
