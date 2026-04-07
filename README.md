@@ -19,14 +19,6 @@ This is a standalone Spring Boot service that demonstrates **centralized excepti
 
 ---
 
-## Tech Stack
-
-- Java 21
-- Spring Boot 
-- Maven
-
----
-
 ## Project Structure
 
 ```
