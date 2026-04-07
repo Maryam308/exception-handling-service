@@ -28,7 +28,7 @@ import com.bank.exceptionhandler.model.RegisterRequest;
 public class DemoController {
 
     // Simulates: fetching a user that doesn't exist
-    // Try: GET /api/demo/users/999
+    // GET /api/demo/users/999
     @GetMapping("/users/{id}")
     public ResponseEntity<String> getUser(@PathVariable Long id) {
         if (id == 999) {
@@ -38,7 +38,7 @@ public class DemoController {
     }
 
     // Simulates: trying to access admin panel without permission
-    // Try: GET /api/demo/admin?role=USER
+    // GET /api/demo/admin?role=USER
     @GetMapping("/admin")
     public ResponseEntity<String> accessAdmin(@RequestParam String role) {
         if (!role.equals("ADMIN")) {
@@ -48,7 +48,7 @@ public class DemoController {
     }
 
     // Simulates: transfer with insufficient funds
-    // Try: POST /api/demo/transfer with { "amount": 9999, "balance": 100 }
+    // POST /api/demo/transfer with { "amount": 9999, "balance": 100 }
     @PostMapping("/transfer")
     public ResponseEntity<String> transfer(@RequestBody TransferRequest request) {
         if (request.getAmount() > request.getBalance()) {
@@ -61,14 +61,14 @@ public class DemoController {
     }
 
     // Simulates: submitting invalid data (validation)
-    // Try: POST /api/demo/register with missing or invalid fields
+    //POST /api/demo/register with missing or invalid fields
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok("User " + request.getName() + " registered successfully");
     }
 
     // Simulates: a bad request with custom message
-    // Try: GET /api/demo/account?status=CLOSED
+    //GET /api/demo/account?status=CLOSED
     @GetMapping("/account")
     public ResponseEntity<String> getAccount(@RequestParam String status) {
         if (status.equals("CLOSED")) {
@@ -78,7 +78,7 @@ public class DemoController {
     }
 
     // Simulates: an unexpected server error
-    // Try: GET /api/demo/crash
+    //GET /api/demo/crash
     @GetMapping("/crash")
     public ResponseEntity<String> crash() {
         throw new RuntimeException("Something went terribly wrong internally");
