@@ -1,5 +1,4 @@
 # Centralized Exception Handling Service
-**POC by Maryam Khattar — Digital Bank Internship**
 
 ---
 
